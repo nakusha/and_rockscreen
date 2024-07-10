@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">캐시타운</string>
+    <string name="battery_level">Battery: %d%%</string>
+    <string name="lock_screen_description">Lock Screen is Active</string>
+</resources>
