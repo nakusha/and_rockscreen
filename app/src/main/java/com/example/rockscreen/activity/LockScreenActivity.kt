@@ -20,6 +20,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.FragmentActivity
+import com.example.rockscreen.ApiClient
 import com.example.rockscreen.PlaceSearchDialogFragment
 import com.example.rockscreen.R
 import com.example.rockscreen.RewardDialogFragment
@@ -33,6 +34,7 @@ class LockScreenActivity : FragmentActivity(), PlaceSearchDialogFragment.PlaceSe
     RewardDialogFragment.RewardDialogListener {
 
     private lateinit var lockScreenLayout: ConstraintLayout
+    private lateinit var tmpInfoTv: TextView
     private lateinit var timeTextView: TextView
     private lateinit var dateTextView: TextView
     private lateinit var batteryTextView: TextView
@@ -109,6 +111,7 @@ class LockScreenActivity : FragmentActivity(), PlaceSearchDialogFragment.PlaceSe
             }
         }
 
+        tmpInfoTv = findViewById(R.id.tmp_info_tv)
         timeTextView = findViewById(R.id.time_tv)
         dateTextView = findViewById(R.id.date_tv)
         batteryTextView = findViewById(R.id.battery_textview)
@@ -144,6 +147,13 @@ class LockScreenActivity : FragmentActivity(), PlaceSearchDialogFragment.PlaceSe
         hideSystemUI()
 
         startCountDownTimer()
+
+        // API 호출 예제.
+        ApiClient.postExampleApi { responseData ->
+            runOnUiThread {
+                updateUI(responseData)
+            }
+        }
     }
 
     override fun onDestroy() {
@@ -276,5 +286,14 @@ class LockScreenActivity : FragmentActivity(), PlaceSearchDialogFragment.PlaceSe
             dp.toFloat(),
             resources.displayMetrics
         )
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun updateUI(responseData: String?) {
+        responseData?.let {
+            tmpInfoTv.text = it
+        } ?: run {
+            tmpInfoTv.text = "API 호출 실패"
+        }
     }
 }
