@@ -18,20 +18,22 @@ import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.FragmentActivity
 import com.example.rockscreen.ApiClient
-import com.example.rockscreen.PlaceSearchDialogFragment
+import com.example.rockscreen.Place
+import com.example.rockscreen.dialog.PlaceSearchDialogFragment
 import com.example.rockscreen.R
-import com.example.rockscreen.RewardDialogFragment
+import com.example.rockscreen.dialog.RewardDialogFragment
+import com.example.rockscreen.dialog.ShopReviewDialogFragment
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 import java.util.concurrent.TimeUnit
-import kotlin.math.abs
 
 class LockScreenActivity : FragmentActivity(), PlaceSearchDialogFragment.PlaceSearchDialogListener,
-    RewardDialogFragment.RewardDialogListener {
+    RewardDialogFragment.RewardDialogListener, ShopReviewDialogFragment.ShopReviewDialogListener {
 
     private lateinit var lockScreenLayout: ConstraintLayout
     private lateinit var tmpInfoTv: TextView
@@ -44,6 +46,11 @@ class LockScreenActivity : FragmentActivity(), PlaceSearchDialogFragment.PlaceSe
     private lateinit var contentsType1Cl: ConstraintLayout
     private lateinit var contentsType2Cl: ConstraintLayout
     private lateinit var contentsType4Cl: ConstraintLayout
+    private lateinit var contentsType4ShopName: TextView
+    private lateinit var contentsType4ShopNameSub: TextView
+    private lateinit var contentsType4ShopAddress: TextView
+    private lateinit var contentsType4Btn1: ConstraintLayout
+    private lateinit var contentsType4Btn2: ConstraintLayout
     private lateinit var contentsType5Cl: ConstraintLayout
     private lateinit var rouletteImageView: ImageView
     private val handler = Handler(Looper.getMainLooper())
@@ -84,16 +91,18 @@ class LockScreenActivity : FragmentActivity(), PlaceSearchDialogFragment.PlaceSe
                     initialX = event.x
                     true
                 }
+
                 MotionEvent.ACTION_MOVE -> {
-                    // 터치가 이동 중일 때, 투명도 애니메이션을 추가합니다.
+                    // 터치가 이동 중일 때, X 좌표를 조정하여 밀리는 효과를 추가합니다.
                     val currentX = event.x
                     val deltaX = currentX - initialX
-                    val alpha = 1.0f - abs(deltaX) / dpToPx(resources.displayMetrics.widthPixels)
 
-                    lockScreenLayout.alpha = alpha // lockScreenLayout에 애니메이션 적용
+                    // X 좌표를 이동시켜 lockScreenLayout에 애니메이션 적용
+                    lockScreenLayout.translationX = deltaX
 
                     true
                 }
+
                 MotionEvent.ACTION_UP -> {
                     // 터치가 끝난 지점의 X 좌표를 저장합니다.
                     val finalX = event.x
@@ -103,10 +112,11 @@ class LockScreenActivity : FragmentActivity(), PlaceSearchDialogFragment.PlaceSe
                         onConfirm()
                     } else {
                         // 애니메이션 초기화
-                        lockScreenLayout.animate().alpha(1.0f).setDuration(300).start()
+                        lockScreenLayout.animate().translationX(0f).setDuration(300).start()
                     }
                     true
                 }
+
                 else -> false
             }
         }
@@ -123,6 +133,11 @@ class LockScreenActivity : FragmentActivity(), PlaceSearchDialogFragment.PlaceSe
         contentsType1Cl = findViewById(R.id.contents_type1_cl)
         contentsType2Cl = findViewById(R.id.contents_type2_cl)
         contentsType4Cl = findViewById(R.id.contents_type4_cl)
+        contentsType4ShopName = findViewById(R.id.contents_type4_tv1)
+        contentsType4ShopNameSub = findViewById(R.id.contents_type4_tv2)
+        contentsType4ShopAddress = findViewById(R.id.contents_type4_tv3)
+        contentsType4Btn1 = findViewById(R.id.contents_type4_btn1)
+        contentsType4Btn2 = findViewById(R.id.contents_type4_btn2)
         contentsType5Cl = findViewById(R.id.contents_type5_cl)
         rouletteImageView = findViewById(R.id.contents_type5_iv)
 
@@ -187,8 +202,8 @@ class LockScreenActivity : FragmentActivity(), PlaceSearchDialogFragment.PlaceSe
 
     // -10초 버튼 클릭 시 호출될 함수
     private fun decreaseTimerByTenSeconds() {
-        if (remainingTimeInMillis >= 30000) { // 30초보다 많이 남아 있을 때만 처리
-            remainingTimeInMillis -= 30000 // 30초 감소
+        if (remainingTimeInMillis >= 60000) { // 60초보다 많이 남아 있을 때만 처리
+            remainingTimeInMillis -= 60000 // 60초 감소
             countDownTimer.cancel()
             startCountDownTimer()
         } else if (remainingTimeInMillis > 0) {
@@ -231,24 +246,42 @@ class LockScreenActivity : FragmentActivity(), PlaceSearchDialogFragment.PlaceSe
         textViewTimer.text = formattedTime
     }
 
-    // 다이얼로그 표시 함수
+    // 장소&가게 검색 다이얼로그
     private fun showPlaceSearchDialog() {
         val dialog = PlaceSearchDialogFragment()
         dialog.show(supportFragmentManager, "PlaceSearchDialog")
+    }
+
+    // 장소&가게 검색 다이얼로그
+    private fun showShopReviewDialog() {
+        val dialog = ShopReviewDialogFragment()
+        dialog.show(supportFragmentManager, "ShopReviewDialog")
     }
 
     override fun onCloseButtonClicked() {
         // Dialog(화면3)에서 닫기 버튼 눌렀을 때의 동작 처리
     }
 
-    override fun onSearchButtonClicked() {
+    override fun onSearchButtonClicked(place: Place) {
         // Dialog(화면3)에서 검색하기 버튼 눌렀을 때의 동작 처리
         contentsType2Cl.visibility = View.INVISIBLE
         reduceTimer.visibility = View.INVISIBLE
         contentsType4Cl.visibility = View.VISIBLE
-        contentsType4Cl.setOnClickListener {
+        contentsType4ShopName.text = place.name
+        contentsType4ShopNameSub.text = place.subName
+        contentsType4ShopAddress.text = place.address
+
+        contentsType4Btn1.setOnClickListener {
             enableRouletteContents()
         }
+        contentsType4Btn2.setOnClickListener {
+            showShopReviewDialog()
+        }
+    }
+
+    override fun onFinish() {
+        // 화면4에서 이동한 가게리뷰 남기기 Dialog에서 작성완료 눌렀을 때.
+        Toast.makeText(this, "가게리뷰가 정상적으로 등록되었습니다.", Toast.LENGTH_SHORT).show()
     }
 
     private var rotateAnimation: Animation? = null
@@ -276,8 +309,12 @@ class LockScreenActivity : FragmentActivity(), PlaceSearchDialogFragment.PlaceSe
     }
 
     override fun onConfirm() {
-        // Dialog(화면6)에서 리워드 확인 후 잠금화면 종료
-        finishAfterTransition()
+        // Dialog(화면6)에서 리워드 확인 후 돌아옴.
+        contentsType4Cl.visibility = View.VISIBLE
+        contentsType5Cl.visibility = View.GONE
+        //캐시 받았으니 비활성화.
+        contentsType4Btn1.isEnabled = false
+        contentsType4Btn1.setBackgroundResource(R.drawable.contents_type4_btn_disable_bg)
     }
 
     private fun dpToPx(dp: Int): Float {

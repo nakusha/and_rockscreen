@@ -1,4 +1,4 @@
-package com.example.rockscreen
+package com.example.rockscreen.dialog
 
 import android.app.Dialog
 import android.content.Context
@@ -7,24 +7,23 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.DialogFragment
+import com.example.rockscreen.R
 
-class PlaceSearchDialogFragment : DialogFragment() {
-    interface PlaceSearchDialogListener {
-        fun onCloseButtonClicked()
-        fun onSearchButtonClicked()
+class ShopReviewDialogFragment : DialogFragment() {
+    interface ShopReviewDialogListener {
+        fun onFinish()
     }
 
-    private var listener: PlaceSearchDialogListener? = null
+    private var listener: ShopReviewDialogListener? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is PlaceSearchDialogListener) {
+        if (context is ShopReviewDialogListener) {
             listener = context
         } else {
-            throw RuntimeException("$context must implement PlaceSearchDialogListener")
+            throw RuntimeException("$context must implement ShopReviewDialogListener")
         }
     }
 
@@ -43,21 +42,15 @@ class PlaceSearchDialogFragment : DialogFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.dialog_place_search, container, false)
+        return inflater.inflate(R.layout.dialog_shop_review, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         // 닫기 버튼 이벤트 처리
-        view.findViewById<ImageView>(R.id.close_icon_iv).setOnClickListener {
-            listener?.onCloseButtonClicked()
-            dismiss()
-        }
-
-        // 검색 버튼 이벤트 처리
-        view.findViewById<ConstraintLayout>(R.id.dialog_contents_search_cl).setOnClickListener {
-            listener?.onSearchButtonClicked()
+        view.findViewById<ConstraintLayout>(R.id.dialog_contents_edit_finish_cl).setOnClickListener {
+            listener?.onFinish()
             dismiss()
         }
     }
@@ -69,7 +62,7 @@ class PlaceSearchDialogFragment : DialogFragment() {
             val width = ViewGroup.LayoutParams.MATCH_PARENT
             val height = TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP,
-                262f,
+                236f,
                 resources.displayMetrics
             ).toInt()
             dialog.window?.setLayout(width, height)

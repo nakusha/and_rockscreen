@@ -1,4 +1,4 @@
-package com.example.rockscreen
+package com.example.rockscreen.dialog
 
 import android.app.Dialog
 import android.content.Context
@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.DialogFragment
+import com.example.rockscreen.R
 
 class RewardDialogFragment : DialogFragment() {
     interface RewardDialogListener {

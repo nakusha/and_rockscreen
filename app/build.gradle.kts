@@ -63,6 +63,8 @@ dependencies {
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.okhttp)
     implementation(libs.logging.interceptor)
+    implementation(libs.play.services.location)
+    implementation(libs.androidx.recyclerview)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

@@ -283,11 +283,181 @@
         android:layout_marginStart="50dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="50dp"
-        android:background="@drawable/contents_type4_bg"
+        android:background="@drawable/contents_type5_bg"
         android:visibility="gone"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/date_tv">
+
+        <ImageView
+            android:id="@+id/contents_type4_iv"
+            android:layout_width="0dp"
+            android:layout_height="150dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/tmp_shop_img"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/contents_type4_tv1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="우감만족"
+            android:textColor="@android:color/black"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="@+id/contents_type4_iv"
+            app:layout_constraintTop_toBottomOf="@+id/contents_type4_iv" />
+
+        <TextView
+            android:id="@+id/contents_type4_tv2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="소고기구이"
+            android:textColor="#666666"
+            android:textSize="12sp"
+            android:textStyle="normal"
+            app:layout_constraintBottom_toBottomOf="@+id/contents_type4_tv1"
+            app:layout_constraintLeft_toRightOf="@+id/contents_type4_tv1" />
+
+        <ImageView
+            android:id="@+id/contents_type4_location_icon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/location"
+            app:layout_constraintLeft_toLeftOf="@+id/contents_type4_iv"
+            app:layout_constraintTop_toBottomOf="@id/contents_type4_tv1" />
+
+        <TextView
+            android:id="@+id/contents_type4_tv3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="서울 강남구 압구정로54길 26 지상1층"
+            android:textColor="#222222"
+            android:textSize="12sp"
+            android:textStyle="normal"
+            app:layout_constraintBottom_toBottomOf="@+id/contents_type4_location_icon"
+            app:layout_constraintLeft_toRightOf="@+id/contents_type4_location_icon"
+            app:layout_constraintTop_toTopOf="@+id/contents_type4_location_icon" />
+
+        <View
+            android:id="@+id/contents_type4_div"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="20dp"
+            android:background="#999999"
+            app:layout_constraintLeft_toLeftOf="@+id/contents_type4_iv"
+            app:layout_constraintRight_toRightOf="@+id/contents_type4_iv"
+            app:layout_constraintTop_toBottomOf="@+id/contents_type4_location_icon" />
+
+        <ImageView
+            android:id="@+id/contents_type4_polygon_icon"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/type4_polygon7"
+            app:layout_constraintRight_toRightOf="@+id/contents_type4_div"
+            app:layout_constraintTop_toBottomOf="@id/contents_type4_div"
+            tools:ignore="ContentDescription" />
+
+
+        <TextView
+            android:id="@+id/contents_type4_tv4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="100% 달성 시 캐시 적립!"
+            android:textColor="@android:color/black"
+            android:textSize="10sp"
+            android:textStyle="normal"
+            app:layout_constraintBottom_toBottomOf="@+id/contents_type4_polygon_icon"
+            app:layout_constraintRight_toLeftOf="@+id/contents_type4_polygon_icon"
+            app:layout_constraintTop_toTopOf="@+id/contents_type4_polygon_icon" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/contents_type4_btn1"
+            android:layout_width="0dp"
+            android:layout_height="36dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/contents_type4_btn1_bg"
+            app:layout_constraintLeft_toLeftOf="@+id/contents_type4_div"
+            app:layout_constraintRight_toRightOf="@+id/contents_type4_div"
+            app:layout_constraintTop_toBottomOf="@+id/contents_type4_polygon_icon">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="캐시 바로 받기"
+                android:textColor="@android:color/white"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/contents_type4_btn2"
+            android:layout_width="0dp"
+            android:layout_height="36dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/contents_type4_btn2_bg"
+            app:layout_constraintLeft_toLeftOf="@+id/contents_type4_div"
+            app:layout_constraintRight_toRightOf="@+id/contents_type4_div"
+            app:layout_constraintTop_toBottomOf="@+id/contents_type4_btn1">
+
+            <TextView
+                android:id="@+id/contents_type4_btn2_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="가게 리뷰남기고 캐시더받기"
+                android:textColor="@android:color/white"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/contents_type4_btn2_iv"
+                android:layout_width="16.5dp"
+                android:layout_height="15dp"
+                android:layout_marginStart="7.75dp"
+                android:src="@drawable/ic_coin"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/contents_type4_btn2_tv"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -313,7 +483,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
